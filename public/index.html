@@ -1327,9 +1327,9 @@ function sendMessage() {
     input.value = "";
 }
 
-socket.on("receiveMessage", (msg) => {
+socket.on("userConnected", (data) => {
     const p = document.createElement("p");
-    p.innerText = msg;
+    p.innerText = data.message;
     document.body.appendChild(p);
 });
 </script>

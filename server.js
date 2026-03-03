@@ -4,12 +4,22 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
     console.log("มีคนเข้าเว็บ");
+
+    // 🔥 บอกทุกคนว่ามี user เข้า
+    io.emit("userConnected", {
+        message: "มีคนเข้าเว็บ",
+        time: new Date()
+    });
 
     socket.on("sendMessage", (msg) => {
         io.emit("receiveMessage", msg);
